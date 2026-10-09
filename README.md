@@ -1,58 +1,239 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Booking Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A booking management application built with Laravel and Livewire.
 
-## About Laravel
+The project demonstrates customer-facing appointment booking alongside an authenticated workspace for managing services, customers, bookings, and business hours.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Authentication**
+    - Registration and login
+    - Email verification
+    - Forgot-password and password-reset flows
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Service management**
+    - Manage the services offered by a business
+    - Support for active and inactive services
 
-## Learning Laravel
+- **Booking management**
+    - Create, update, confirm, cancel, and complete bookings
+    - Filter bookings by date and status where supported by the application
+    - Reschedule bookings through the public booking-management flow
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Customer management**
+    - Manage customer records associated with bookings
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Business hours**
+    - Configure opening hours by day of the week
+    - Mark individual days as closed
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **Public booking flows**
+    - Public booking page for a business
+    - Signed links for managing or cancelling a booking
 
-## Agentic Development
+- **Reminders**
+    - Booking reminder functionality
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- **Testing**
+    - Automated test suite written with Pest
+    - 300+ tests covering application behavior and business rules
+
+## Tech Stack
+
+- PHP 8.4
+- Laravel 13
+- Livewire 4
+- Tailwind CSS 4
+- MySQL
+- Pest
+
+## Requirements
+
+Before installing the application, make sure your development environment includes:
+
+- PHP 8.4 and the PHP extensions required by Laravel
+- Composer
+- Node.js and npm
+- MySQL
+- A local web server or Laravel-compatible development environment
+
+## Installation
+
+### 1. Clone the repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <REPOSITORY_URL>
+cd booking-platform
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install PHP dependencies
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Create your environment file
 
-## Code of Conduct
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+On Windows, you can copy `.env.example` to `.env` manually or use:
 
-## Security Vulnerabilities
+```powershell
+Copy-Item .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Generate the application key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Configure the database
+
+Create a MySQL database and configure the following values in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=booking_platform
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Adjust the database name, username, and password to match your local environment.
+
+### 6. Run migrations and seed demo data
+
+```bash
+php artisan migrate --seed
+```
+
+The default database seeder runs `DemoDataSeeder`, which creates the demo business, customers, services, business hours, and bookings.
+
+### 7. Install and build frontend assets
+
+```bash
+npm install
+npm run build
+```
+
+### 8. Start the local development server
+
+```bash
+php artisan serve
+```
+
+For frontend development with hot reload, run:
+
+```bash
+npm run dev
+```
+
+in a separate terminal.
+
+## Demo Account
+
+The seeded database includes a demo business account.
+
+**Email:**
+
+```text
+demo@booking-platform.test
+```
+
+**Password:**
+
+```text
+password
+```
+
+The demo account is created with a verified email address so the application can be explored immediately after seeding.
+
+> **Note:** These credentials are intended only for local development and portfolio demonstration. Do not reuse this password for a real account.
+
+## Demo Data
+
+The demo seeder creates a realistic sample dataset including:
+
+- 1 demo business
+- 12 customers
+- 5 services
+- Active and inactive services
+- Business hours for the full week
+- Closed Sunday
+- Historical completed and cancelled bookings
+- Upcoming pending and confirmed bookings
+- Booking notes and different service durations
+
+To recreate the complete demo database from scratch:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+> **Warning:** `migrate:fresh` drops all tables in the configured database. Use a development database only.
+
+## Running Tests
+
+Run the complete automated test suite with:
+
+```bash
+php artisan test
+```
+
+The project currently contains **335 tests**, covering authentication, booking rules, customer and service management, business hours, public booking flows, signed URLs, dashboard behavior, tenant isolation, validation, and other application behavior.
+
+## Security Notes
+
+- Keep `.env` out of version control.
+- Never commit passwords, API keys, tokens, or other secrets.
+- Use HTTPS and review application configuration before deploying publicly.
+- Signed booking-management and cancellation links are time-limited; treat them as private links.
+- The demo credentials are intended only for local development and demonstration.
+
+## Project Structure
+
+The application follows Laravel's standard project structure with domain logic organized into actions, queries, models, Livewire components, and feature tests.
+
+Key areas include:
+
+```text
+app/
+├── Actions/
+├── Enums/
+├── Exceptions/
+├── Livewire/
+└── Models/
+
+database/
+├── factories/
+├── migrations/
+└── seeders/
+
+resources/
+├── css/
+└── views/
+
+routes/
+
+tests/
+├── Feature/
+└── Unit/
+```
+
+## Project Status
+
+This repository is a demonstration and portfolio project.
+
+The application is covered by an automated test suite and is intended to demonstrate Laravel, Livewire, authentication, booking workflows, multi-tenant data isolation, validation, and business-rule implementation.
+
+Review the code and configuration before using the project in a production environment.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+No license has been specified yet.
+
+Add a license file if you intend to permit others to use, modify, or distribute this project.
