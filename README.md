@@ -62,7 +62,7 @@ Before installing the application, make sure your development environment includ
 ### 1. Clone the repository
 
 ```bash
-git clone <REPOSITORY_URL>
+git clone https://github.com/aantanaskovic/booking-platform.git
 cd booking-platform
 ```
 
